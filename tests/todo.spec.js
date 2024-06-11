@@ -19,7 +19,7 @@ async function createDefaultTodos(page) {
   }
 }
 
-test.describe("New Todo", () => {
+test.describe("New Todo Test", () => {
   test("should allow me to add todo items", async ({ page }) => {
     // create a new todo locator
     const textInput = page.getByTestId("text-input");
