@@ -95,3 +95,45 @@ test.describe("New Todo Test", () => {
     await expect(page.getByTestId("todo-item-label")).toHaveText("ab");
   });
 });
+
+test.describe('Mark as Completed',()=>{
+  test.beforeEach(async ({ page }) => {
+    await createDefaultTodos(page);
+  });
+
+  test('should allow me to mark all items as completed', async ({ page }) => {
+    // Complete all todos.
+    // await page.getByLabel('Mark all as complete').check();
+    await page.getByTestId('toggle-all').click();
+
+    await expect(page.getByTestId('todo-item')).toHaveClass(['completed', 'completed', 'completed']);
+  });
+
+
+  test('should allow me to clear all completed items', async ({ page }) => {
+    // Complete all todos.
+    // await page.getByLabel('Mark all as complete').check();
+    await page.getByTestId('toggle-all').dblclick();
+
+    await expect(page.getByTestId('todo-item')).toHaveClass(['', '', '']);
+  });
+})
+
+
+test.describe('Test Item works',()=>{
+  test.beforeEach(async ({ page }) => {
+    await page.getByTestId('text-input').fill('content');
+    await page.getByTestId('text-input').press('Enter');
+  });
+
+  test('should allow me check to mark as completed', async ({page}) => {
+    const todoItem = await page.getByTestId('todo-item');
+
+    await expect(page.getByTestId('todo-item')).toHaveClass('');
+
+    await expect(page.getByTestId('todo-item-toggle')).toBeVisible()
+    await page.getByTestId('todo-item-toggle').click();
+
+    await expect(todoItem).toHaveClass('completed');
+  })
+})
