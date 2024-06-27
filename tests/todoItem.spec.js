@@ -49,4 +49,29 @@ test.describe("Todo Item works", async () => {
 
     await expect(parent).not.toBeVisible();
   });
+
+  test("should allow me to edit todo item", async ({ page }) => {
+    await createDefaultTodos(page);
+
+    const todoItem = page
+      .getByTestId("todo-item")
+      .filter({ has: page.getByText("buy some cheese") });
+
+    await todoItem.dblclick();
+
+    const todoInput = page.getByTestId("todo-item").getByTestId("text-input");
+
+    await expect(todoInput).toBeVisible();
+
+    await todoInput.fill("buy some oranges");
+    await todoInput.press("Enter");
+
+    await expect(todoInput).not.toBeVisible();
+
+    const newTodo = page
+      .getByTestId("todo-item")
+      .filter({ has: page.getByText("buy some oranges") });
+
+    await expect(newTodo).toBeVisible();
+  });
 });
