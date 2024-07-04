@@ -20,11 +20,11 @@ test.describe("New Todo Test", () => {
       TODO_ITEMS[0],
     ]);
 
-    // // Create 2nd todo.
+    // Create 2nd todo.
     await textInput.fill(TODO_ITEMS[1]);
     await textInput.press("Enter");
 
-    // // Make sure the list now has two todo items.
+    // Make sure the list now has two todo items.
     console.log(page.getByTestId("todo-item-label"));
     await expect(page.getByTestId("todo-item-label")).toHaveText([
       TODO_ITEMS[0],
@@ -81,4 +81,17 @@ test.describe("New Todo Test", () => {
 
     await expect(page.getByTestId("todo-item-label")).toHaveText("ab");
   });
+
+
+  test('should trim input values on add todo', async ({ page }) => {
+    const textInput = page.getByTestId("text-input");
+
+    await textInput.fill('  buy some cheese  ');
+    await textInput.press("Enter");
+
+    const todoItem = page
+      .getByTestId("todo-item");
+    
+    await expect(todoItem).toHaveText('buy some cheese');
+  })
 });

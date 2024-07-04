@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import createDefaultTodos from "../createDefaultTodos";
+import { todo } from "node:test";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://todomvc.com/examples/react/dist/");
@@ -74,4 +75,25 @@ test.describe("Todo Item works", async () => {
 
     await expect(newTodo).toBeVisible();
   });
+
+  test('should remove controls when edit todo input', async ({ page }) => {
+    await createDefaultTodos(page);
+
+    const todoItem = page
+      .getByTestId("todo-item")
+      .filter({ has: page.getByText("content") });
+
+    const radioButton = todoItem.getByTestId("todo-item-toggle");
+    const removeButton = todoItem.getByTestId("todo-item-button");
+
+    await todoItem.hover()
+    
+    await expect(radioButton).toBeVisible();
+    await expect(removeButton).toBeVisible();
+    
+    await todoItem.dblclick();
+
+    await expect(radioButton).not.toBeVisible();
+    await expect(removeButton).not.toBeVisible();
+  })
 });
