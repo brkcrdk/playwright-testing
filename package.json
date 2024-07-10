@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Initial file. - Testing url:  https://todomvc.com/examples/react/dist/ -",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "install-browsers": "playwright install --with-deps",
+    "run-e2e": "playwright test",
+    "run-e2e:ui": "playwright test --ui"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
