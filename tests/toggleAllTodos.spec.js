@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test";
 import createDefaultTodos from "../createDefaultTodos";
-import { goRoute } from "./todoStatusRoute.spec";
+
+const goRoute = async (page, route) => {
+  await page.getByTestId("footer-navigation").getByText(route).click();
+};
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://todomvc.com/examples/react/dist/");

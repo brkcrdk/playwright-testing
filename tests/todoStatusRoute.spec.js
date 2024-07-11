@@ -6,7 +6,7 @@ import createDefaultTodos from "../createDefaultTodos";
 // active alanına basıldığında seçilmeyen totolar bu route da var mı kontrol edilcek
 // tamamlanan todo route una gittiğinde eklenen todolardan seçilmiş olanlar kadar kadar az todo tamamlanmış routeunda var mı bakılacak
 
-export const goRoute = async (page, route) => {
+const goRoute = async (page, route) => {
   await page.getByTestId("footer-navigation").getByText(route).click();
 };
 
