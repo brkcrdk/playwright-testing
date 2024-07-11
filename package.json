@@ -4,9 +4,9 @@
   "description": "Initial file. - Testing url:  https://todomvc.com/examples/react/dist/ -",
   "main": "index.js",
   "scripts": {
-    "install-browsers": "playwright install --with-deps",
-    "run-e2e": "playwright test",
-    "run-e2e:ui": "playwright test --ui"
+    "install-browsers": "npx playwright install --with-deps",
+    "run-e2e": "npx playwright test",
+    "run-e2e:ui": "npx playwright test --ui"
   },
   "keywords": [],
   "author": "",
