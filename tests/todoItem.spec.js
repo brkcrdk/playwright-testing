@@ -1,6 +1,5 @@
 import { test, expect } from "@playwright/test";
 import createDefaultTodos from "../createDefaultTodos";
-import { todo } from "node:test";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://todomvc.com/examples/react/dist/");
