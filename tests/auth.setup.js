@@ -31,3 +31,18 @@ setup("authenticate as user", async ({ page }) => {
   await expect(page.locator('[data-qa-selector="user_menu"]')).toBeVisible();
   await page.context().storageState({ path: userFile });
 });
+
+const blockedUserFile = "playwright/.auth/blockedUser.json";
+
+setup("authenticate as blocked user", async ({ page }) => {
+  await page.goto(SIGNIN_URL);
+  await page
+    .locator('[data-qa-selector="login_field"]')
+    .fill(process.env.BLOCKED_USER_USER_NAME);
+  await page
+    .locator('[data-qa-selector="password_field"]')
+    .fill(process.env.BLOCKED_USER_PASSWORD);
+  await page.locator('[data-qa-selector="sign_in_button"]').click();
+  await expect(page.locator('[data-qa-selector="user_menu"]')).toBeVisible();
+  await page.context().storageState({ path: blockedUserFile });
+});
