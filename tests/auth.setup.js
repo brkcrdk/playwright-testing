@@ -1,48 +1,29 @@
 import { test as setup, expect } from "@playwright/test";
-
-const SIGNIN_URL = `${process.env.BASE_URL}/users/sign_in`;
-
-const adminFile = "playwright/.auth/admin.json";
+import signIn from "../signIn";
 
 setup("authenticate as admin", async ({ page }) => {
-  await page.goto(SIGNIN_URL);
-  await page
-    .locator('[data-qa-selector="login_field"]')
-    .fill(process.env.ADMIN_USER_NAME);
-  await page
-    .locator('[data-qa-selector="password_field"]')
-    .fill(process.env.ADMIN_PASSWORD);
-  await page.locator('[data-qa-selector="sign_in_button"]').click();
-  await expect(page.locator('[data-qa-selector="user_menu"]')).toBeVisible();
-  await page.context().storageState({ path: adminFile });
+  await signIn({
+    username: process.env.ADMIN_USER_NAME,
+    password: process.env.ADMIN_PASSWORD,
+    page,
+    path: "playwright/.auth/admin.json",
+  });
 });
-
-const userFile = "playwright/.auth/user.json";
 
 setup("authenticate as user", async ({ page }) => {
-  await page.goto(SIGNIN_URL);
-  await page
-    .locator('[data-qa-selector="login_field"]')
-    .fill(process.env.USER_USER_NAME);
-  await page
-    .locator('[data-qa-selector="password_field"]')
-    .fill(process.env.USER_PASSWORD);
-  await page.locator('[data-qa-selector="sign_in_button"]').click();
-  await expect(page.locator('[data-qa-selector="user_menu"]')).toBeVisible();
-  await page.context().storageState({ path: userFile });
+  await signIn({
+    username: process.env.USER_USER_NAME,
+    password: process.env.USER_PASSWORD,
+    page,
+    path: "playwright/.auth/user.json",
+  });
 });
 
-const blockedUserFile = "playwright/.auth/blockedUser.json";
-
 setup("authenticate as blocked user", async ({ page }) => {
-  await page.goto(SIGNIN_URL);
-  await page
-    .locator('[data-qa-selector="login_field"]')
-    .fill(process.env.BLOCKED_USER_USER_NAME);
-  await page
-    .locator('[data-qa-selector="password_field"]')
-    .fill(process.env.BLOCKED_USER_PASSWORD);
-  await page.locator('[data-qa-selector="sign_in_button"]').click();
-  await expect(page.locator('[data-qa-selector="user_menu"]')).toBeVisible();
-  await page.context().storageState({ path: blockedUserFile });
+  await signIn({
+    username: process.env.BLOCKED_USER_USER_NAME,
+    password: process.env.BLOCKED_USER_PASSWORD,
+    page,
+    path: "playwright/.auth/blockedUser.json",
+  });
 });
